@@ -1,0 +1,27 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="space-y-5">
+
+    <div class="form-element">
+      <label>
+        <span class="text-sm font-medium text-gray-700 block">Email</span>
+        <input type="email" formControlName="email" class="block mt-2 rounded w-96 border border-gray-400 px-3 p-1 focus:outline-none active:outline-none focus:border-gray-700">
+      </label>
+    </div>
+    <!-- form element -->
+
+    <div class="form-element">
+      <label>
+        <span class="text-sm font-medium text-gray-700 block">Password</span>
+        <input type="password" formControlName="password" class="block mt-2 rounded w-96 border border-gray-400 px-3 p-1 focus:outline-none active:outline-none focus:border-gray-700">
+      </label>
+    </div>
+    <!-- form element -->
+
+    <div class="form-element">
+        <button type="submit" class="block mt-2 rounded w-auto border border-gray-400 px-5 py-1 focus:outline-none active:outline-none focus:border-gray-700 hover:bg-gray-800 hover:border-gray-800 hover:text-gray-100 transition-all tracking-wider">Login</button>
+    </div>
+    <!-- form element -->
+
+  </form>
+</div>
+<!-- login container -->

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { EventBusService } from 'src/app/shared/event-bus.service';
+import { TokenStorageService } from 'src/app/shared/token.service';
 
 @Component({
   selector: 'app-profile-action',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileActionComponent implements OnInit {
 
-  constructor() { }
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showModeratorBoard = false;
+  username?: string;
+
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
+  }
+
+  logout(): void {
+    this.tokenStorageService.logout();
+    this.isLoggedIn = false;
   }
 
 }

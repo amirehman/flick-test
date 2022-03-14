@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
+import { TokenStorageService } from 'src/app/shared/token.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,14 +14,16 @@ export class DashboardComponent implements OnInit {
   message = '';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    public authService: AuthService,
+    private tokenStorage: TokenStorageService,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
-    this.http.get('https://phplaravel-718120-2386003.cloudwaysapps.com/api/v1/me')
-    .subscribe( (res: any) => {
-      this.message = `Hi ${res.name}`
-    })
+    if (!this.tokenStorage.getToken()) {
+      this.router.navigate(['login']);
+    }
   }
 
 }

@@ -48,11 +48,27 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['login']);
     }
 
+    this.getUser()
+
   }
 
   updateUser(): void {
 
     this.authService.updateUser(this.userForm.value.name, this.userForm.value.phone).subscribe(
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err)
+        this.errorMessage = err.error.message;
+      }
+    );
+
+  }
+
+  getUser(): void {
+
+    this.authService.getUser().subscribe(
       res => {
         console.log(res)
       },

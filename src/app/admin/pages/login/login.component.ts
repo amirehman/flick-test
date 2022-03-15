@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveUser(res.data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.router.navigate(['dashboard']);
+        window.location.reload();
 
       },
       err => {

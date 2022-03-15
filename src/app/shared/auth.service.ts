@@ -27,6 +27,21 @@ export class AuthService {
     return this.http.post(`${AUTH_API}/auth/admin-login`, { email, password }, httpOptions);
   }
 
+  getUser(): Observable<any> {
+    
+    let token = window.sessionStorage.getItem(TOKEN_KEY);
+
+    headers: new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'App-Secret': '*(3%13@Uh@1',
+      'Platform': 'web',
+      'Accept': 'application/json'
+    })
+
+    return this.http.get(`${AUTH_API}/me`, httpOptions);
+  }
+
   updateUser(name: string, phone: string): Observable<any> {
 
 

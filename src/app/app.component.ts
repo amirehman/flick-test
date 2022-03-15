@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TokenStorageService } from './shared/token.service';
 import { EventBusService } from './shared/event-bus.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -28,12 +29,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
+
   }
 
   ngOnDestroy(): void {
     if (this.eventBusSub)
-      this.eventBusSub.unsubscribe();
+      this.eventBusSub.unsubscribe();  
   }
+
 
   logout(): void {
     this.tokenStorageService.logout();

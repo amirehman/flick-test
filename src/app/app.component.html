@@ -2,14 +2,14 @@
 
   <div class="flex items-start justify-between">
 
-    <app-sidebar></app-sidebar>
+
+    <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
 
     <div class="main-site w-full h-full">
 
-      <app-header></app-header>
+      <app-header *ngIf="isLoggedIn"></app-header>
 
-
-      <div class="content-area w-full p-10">
+      <div class="content-area w-full p-10" [class]="isLoggedIn ? '' : 'flex items-center justify-center h-screen'">
 
         <div class="inner text-theme-black">
 

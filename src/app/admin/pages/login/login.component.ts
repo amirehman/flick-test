@@ -24,14 +24,14 @@ export class LoginComponent implements OnInit {
     public router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['operation@gobutton.me'],
-      password: ['secret'],
+      email: [''],
+      password: [''],
     });
   }
 
   form: any = {
-    email: 'operation@gobutton.me',
-    password: 'secret'
+    email: '',
+    password: ''
   };
 
   ngOnInit(): void {

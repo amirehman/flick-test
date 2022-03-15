@@ -44,10 +44,11 @@ export class LoginComponent implements OnInit {
 
   loginUser(): void {
     const { email, password } = this.form;
-    
+
     this.authService.login(email, password).subscribe(
       res => {
         this.tokenStorage.saveToken(res.data.access_token);
+        this.tokenStorage.saveRefreshToken(res.data.refresh_token);
         this.tokenStorage.saveUser(res.data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;

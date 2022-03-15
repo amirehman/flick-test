@@ -10,15 +10,15 @@ import { EventBusService } from './shared/event-bus.service';
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  
+
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
   eventBusSub?: Subscription;
-  
+
   constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService) { }
-  
+
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.logout();
     });
   }
-  
+
   ngOnDestroy(): void {
     if (this.eventBusSub)
       this.eventBusSub.unsubscribe();

@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private tokenService: TokenStorageService, private authService: AuthService) { }
-  
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
     let authReq = req;
     const token = this.tokenService.getToken();
@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
       authReq = this.addTokenHeader(req, token);
     }
     return next.handle(authReq).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && !authReq.url.includes('auth/signin') && error.status === 401) {
+      if (error instanceof HttpErrorResponse && !authReq.url.includes('auth/admin-login') && error.status === 401) {
         return this.handle401Error(authReq, next);
       }
       return throwError(error);
@@ -42,12 +42,12 @@ export class AuthInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
             this.tokenService.saveToken(token.accessToken);
             this.refreshTokenSubject.next(token.accessToken);
-            
+
             return next.handle(this.addTokenHeader(request, token.accessToken));
           }),
           catchError((err) => {
             this.isRefreshing = false;
-            
+
             this.tokenService.logout();
             return throwError(err);
           })

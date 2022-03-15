@@ -6,6 +6,7 @@ import { UserComponent } from './admin/pages/user/user.component';
 import { RegisterComponent } from './admin/pages/register/register.component';
 import { GuestComponent } from './layouts/guest/guest.component';
 import { AuthGuard } from "./shared/auth.guard";
+import { ProfileComponent } from './admin/pages/profile/profile.component';
 
 const routes: Routes = [
 
@@ -25,7 +26,7 @@ const routes: Routes = [
   // },
 
   {
-    path: '', component: DashboardComponent,
+    path: '', component: DashboardComponent, canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -37,13 +38,8 @@ const routes: Routes = [
       }
     ]
   },
-
-
-
-  // { path: '', component: DashboardComponent },
-  // { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'user-profile/:id', component: UserComponent, canActivate: [AuthGuard] }
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 
   // { path: 'register', component: RegisterComponent }
 ];

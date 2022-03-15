@@ -16,6 +16,7 @@ import { LoginComponent } from './admin/pages/login/login.component';
 import { RegisterComponent } from './admin/pages/register/register.component';
 import { GuestComponent } from './layouts/guest/guest.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ProfileComponent } from './admin/pages/profile/profile.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     DashboardComponent,
     LoginComponent,
     RegisterComponent,
-    GuestComponent
+    GuestComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

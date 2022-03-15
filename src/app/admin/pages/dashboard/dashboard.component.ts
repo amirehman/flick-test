@@ -21,9 +21,6 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (!this.tokenStorage.getToken()) {
-      this.router.navigate(['login']);
-    }
   }
 
 }

@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   username?: string;
   eventBusSub?: Subscription;
 
-  constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService) { }
+  constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService, public router: Router,) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -41,6 +41,10 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(): void {
     this.tokenStorageService.logout();
     this.isLoggedIn = false;
+  }
+
+  hasRoute (route: String) {
+    return this.router.url == route
   }
 
 }

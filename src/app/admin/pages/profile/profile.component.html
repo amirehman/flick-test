@@ -3,7 +3,11 @@
   <div class="mb-10 border-b border-gray-300 pb-3">
     <h1 class="text-xl font-semibold text-gray-700"> Profile </h1>
   </div>
-  <div class="my-3 text-red-500">{{errorMessage}}</div>
+
+  <div *ngIf="successMessage" class="temp-message flex items-center justify-between border border-green-500 rounded p-3 py-2 bg-green-50 mb-10">
+    <span class="text-normal text-green-600">Profile Updated!  </span>    
+  </div>
+
   <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="space-y-5">
 
     <div class="form-element">

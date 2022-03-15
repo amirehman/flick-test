@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   data?= null;
   email?= null;
   errorMessage?= null;
+  successMessage = false
 
   userForm = new FormGroup({
     name: new FormControl(),
@@ -30,6 +31,7 @@ export class ProfileComponent implements OnInit {
     public fb: FormBuilder,
     public authService: AuthService,
     public router: Router,
+    private tokenStorage: TokenStorageService,
     private tokenStorageService: TokenStorageService
   ) {}
 
@@ -56,7 +58,10 @@ export class ProfileComponent implements OnInit {
 
     this.authService.updateUser(this.userForm.value.name, this.userForm.value.phone).subscribe(
       res => {
-        console.log(res)
+        this.successMessage = true
+        setTimeout( () => {
+          this.successMessage = false
+      }, 3000);
       },
       err => {
         console.log(err)
@@ -66,11 +71,20 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  closeMessage() {
+
+  }
+
   getUser(): void {
 
     this.authService.getUser().subscribe(
       res => {
-        console.log(res)
+
+        this.userForm.patchValue({
+          name: res.data.name,
+          phone: res.data.phone,
+        });
+
       },
       err => {
         console.log(err)

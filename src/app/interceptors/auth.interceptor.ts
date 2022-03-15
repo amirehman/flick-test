@@ -2,11 +2,11 @@ import { HTTP_INTERCEPTORS, HttpEvent, HttpErrorResponse } from '@angular/common
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
-import { TokenStorageService  } from '../shared/token.service';
+import { TokenStorageService } from '../shared/token.service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 
-// const TOKEN_HEADER_KEY = 'Authorization';  // for Spring Boot back-end
+//const TOKEN_HEADER_KEY = 'Authorization';  // for Spring Boot back-end
 const TOKEN_HEADER_KEY = 'x-access-token';    // for Node.js Express back-end
 
 @Injectable()
@@ -35,15 +35,17 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
-      const token = this.tokenService.getRefreshToken();
+      const Refreshtoken = this.tokenService.getRefreshToken();
+      const token = this.tokenService.getToken();
       if (token)
-        return this.authService.refreshToken(token).pipe(
+        return this.authService.refreshToken(token, Refreshtoken).pipe(
           switchMap((token: any) => {
             this.isRefreshing = false;
-            this.tokenService.saveToken(token.accessToken);
-            this.refreshTokenSubject.next(token.accessToken);
+            this.tokenService.saveToken(token.data.access_token);
+            this.tokenService.saveRefreshToken(token.data.refresh_token)
+            this.refreshTokenSubject.next(token.data.access_token);
 
-            return next.handle(this.addTokenHeader(request, token.accessToken));
+            return next.handle(this.addRefreshTokenHeader(request, token.data.access_token));
           }),
           catchError((err) => {
             this.isRefreshing = false;
@@ -60,9 +62,15 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
+  private addRefreshTokenHeader(request: HttpRequest<any>, token: string) {
+    /* for Spring Boot back-end */
+    return request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
+    /* for Node.js Express back-end */
+    //return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, token) });
+  }
   private addTokenHeader(request: HttpRequest<any>, token: string) {
     /* for Spring Boot back-end */
-    // return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
+    //return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
     /* for Node.js Express back-end */
     return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, token) });
   }

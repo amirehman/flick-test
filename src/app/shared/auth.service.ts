@@ -28,18 +28,18 @@ export class AuthService {
   }
 
   getUser(): Observable<any> {
-    
+
     let token = window.sessionStorage.getItem(TOKEN_KEY);
-
-    headers: new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      'App-Secret': '*(3%13@Uh@1',
-      'Platform': 'web',
-      'Accept': 'application/json'
-    })
-
-    return this.http.get(`${AUTH_API}/me`, httpOptions);
+    const headers = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'App-Secret': '*(3%13@Uh@1',
+        'Platform': 'web',
+        'Accept': 'application/json'
+      })
+    };
+    return this.http.get(`${AUTH_API}/me`, headers);
   }
 
   updateUser(name: string, phone: string): Observable<any> {
@@ -61,8 +61,18 @@ export class AuthService {
 
   }
 
-  refreshToken(token: string) {
-    return this.http.get(`${AUTH_API}/auth/refresh?access_token=${token}`, httpOptions);
+  refreshToken(token: string, Refreshtoken: string | null) {
+    const headers = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${Refreshtoken}`,
+        'Content-Type': 'application/json',
+        'App-Secret': '*(3%13@Uh@1',
+        'Platform': 'web',
+        'Accept': 'application/json'
+      })
+    };
+
+    return this.http.get(`${AUTH_API}/auth/refresh?access_token=${token}`, headers);
   }
 
 

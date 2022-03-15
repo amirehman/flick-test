@@ -13,7 +13,7 @@
 
         <div class="inner text-theme-black">
 
-          <app-messages></app-messages>
+          <app-messages *ngIf="!hasRoute('/login')"></app-messages>
 
           <router-outlet></router-outlet>
 
